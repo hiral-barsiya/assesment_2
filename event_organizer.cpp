@@ -4,100 +4,98 @@ using namespace std;
 
 class Event {
 private:
-    string eventName;
-    string firstName;
-    string lastName;
-    int numberOfGuests;
-    int numberOfMinutes;
+    string name;
+    string fname;
+    string lname;
+    int guests;
+    int minutes;
 
-    const double costPerHour = 18.50;
-    const double costPerMinute = 0.40;
-    const double costPerDinner = 20.70;
+    const double hourRate = 18.50;
+    const double minRate = 0.40;
+    const double dinnerRate = 20.70;
 
 public:
-    // Set event details
-    void setEventDetails(string name, string fName, string lName, int guests, int minutes) {
-        eventName = name;
-        firstName = fName;
-        lastName = lName;
-        numberOfGuests = guests;
-        numberOfMinutes = minutes;
+    void setData(string n, string f, string l, int g, int m) {
+        name = n;
+        fname = f;
+        lname = l;
+        guests = g;
+        minutes = m;
     }
 
-    // Calculate number of servers needed
-    int C_servers() {
-        return (numberOfGuests + 19) / 20;
+    // Calculate number of servers
+    int calcServers() {
+        return (guests + 19) / 20;
     }
 
-    // Calculate cost for one server
-    double C_CostForOneServer() {
-        return (numberOfMinutes / 60) * costPerHour + (numberOfMinutes % 60) * costPerMinute;
+    // Calculate server cost
+    double serverCost() {
+        return (minutes / 60) * hourRate + (minutes % 60) * minRate;
     }
 
-    // Calculate total food cost
-    double C_FoodCost() {
-        return numberOfGuests * costPerDinner;
+    // Calculate food cost
+    double foodCost() {
+        return guests * dinnerRate;
     }
 
     // Calculate average cost per person
-    double C_AverageCostPerPerson() {
-        return C_FoodCost() / numberOfGuests;
+    double avgCost() {
+        return foodCost() / guests;
     }
 
-    // Calculate total cost of the event
-    double C_totalcost() {
-        int servers = C_servers();
-        double costForOneServer = C_CostForOneServer();
-        double totalFoodCost = C_FoodCost();
-        return totalFoodCost + (costForOneServer * servers);
+    // Calculate total cost
+    double totalCost() {
+        int servers = calcServers();
+        double server = serverCost();
+        double food = foodCost();
+        return food + (server * servers);
     }
 
-    // Calculate deposit amount 
-    double C_DepositAmount() {
-        return C_totalcost() * 0.25;
+    // Calculate deposit amount
+    double deposit() {
+        return totalCost() * 0.25;
     }
 
-    
+    // Display event summary
     void display() {
-        int servers = C_servers();
-        double costForOneServer = C_CostForOneServer();
-        double totalFoodCost = C_FoodCost();
-        double totalCost = C_totalcost();
-        double depositAmount = C_DepositAmount();
-        double averageCostPerPerson = C_AverageCostPerPerson();
+        int servers = calcServers();
+        double server = serverCost();
+        double food = foodCost();
+        double total = totalCost();
+        double avg = avgCost();
+        double dep = deposit();
 
-        cout << "=================Event estimate for:" << firstName << " " << lastName << "================"<<endl;
-        cout << "Number of Servers : " << servers << endl;
-        cout << "Total Cost for Servers: " << costForOneServer << endl;
-        cout << "Total Cost for Food is: " << totalFoodCost << endl;
-        cout << "Average Cost per Person: " << averageCostPerPerson << endl<<endl;
-        cout << "Total Cost is: " << totalCost << endl;
+        cout << "=========================Event Estimate for: " << fname << " " << lname << "============================"<<endl;
+        cout << "Servers: " << servers << endl;
+        cout << "Server Cost: " << server << endl;
+        cout << "Food Cost: " << food << endl;
+        cout << "Avg Cost: " << avg << endl << endl;
+        cout << "Total Cost: " << total << endl;
         cout<<"please deposite a 25%   deposite to reserve the event"<<endl;
-        cout << "Deposit Amount is: " << depositAmount << endl;
-        
-
+        cout << "Deposit 25% to reserve: " << dep << endl;
     }
 };
 
 int main() {
-    string eventName, firstName, lastName;
-    int numberOfGuests, numberOfMinutes;
+    string name, fname, lname;
+    int guests, minutes;
 
-    cout << "Event Management System" << endl << endl;
+    cout << "*************************Event Management System**************************" << endl << endl;
     cout << "Enter event name: ";
-    cin >> eventName;
-    cout << "Enter your first name: ";
-    cin >> firstName;
-    cout << "Enter your last name: ";
-    cin >> lastName;
-    cout << "Enter number of guests: ";
-    cin >> numberOfGuests;
-    cout << "Enter event duration (minutes): ";
-    cin >> numberOfMinutes;
+    cin >> name;
+    cout << "Enter first name: ";
+    cin >> fname;
+    cout << "Enter last name: ";
+    cin >> lname;
+    cout << "Enter guests: ";
+    cin >> guests;
+    cout << "Enter minutes: ";
+    cin >> minutes;
 
     Event event;
-    event.setEventDetails(eventName, firstName, lastName, numberOfGuests, numberOfMinutes);
+    event.setData(name, fname, lname, guests, minutes);
     event.display();
 
     return 0;
 }
+
